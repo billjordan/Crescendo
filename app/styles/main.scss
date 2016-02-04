@@ -1,23 +1,14 @@
 $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
 // bower:scss
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
-
-
-.browsehappy {
-  margin: 0.2em 0;
-  background: #ccc;
-  color: #000;
-  padding: 0.2em 0;
-}
-
-body {
-  padding: 0;
-  background: #99ff99;
-}
-
 // endbower
 // endbower
 /*form body*/
+
+body {
+padding: 0;
+background: #99ff99;
+}
 
 .formBody{
 padding-top: 20px;

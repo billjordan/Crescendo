@@ -8,15 +8,16 @@
  * Controller of the crescendoApp
  */
 angular.module('crescendoApp')
-  .controller('AboutCtrl', function ($scope, $log, DB_URL, $firebaseArray)
+  .controller('AboutCtrl', function ($scope, $log, DB_URL, $firebaseArray, $location)
   {
 
   $scope.listing;
+    $scope.loc = {};
   $scope.update = function(listing){
   	$scope.listing = listing;
   	$log.info($scope.listing);
-  	var thing = codeAddress($scope.listing.address);
-  	$log.info(thing);
+  	var point = codeAddress($scope.listing.address);
+  	$log.info($scope.loc.lng);
   }
 
   var geocoder = new google.maps.Geocoder();
@@ -37,12 +38,38 @@ angular.module('crescendoApp')
   				// city: cityState.city,
   				// state: cityState.state
   			};
-  			$log.info(results);
-  			$log.info(point);
-  			$log.info(point.loc.lat());
-  			$log.info(point.loc.lng());
+  			//$log.info(results);
+  			//$log.info(point);
+  			//$log.info(point.loc.lat());
+            $scope.loc.lat = point.loc.lat();
+            $scope.loc.lng = point.loc.lng();
+            $log.info($scope.loc);
+            $scope.listing.lat = $scope.loc.lat;
+  			$log.info($scope.listing);
+            $log.info($scope.loc.lng);
+            $scope.listing.long = $scope.loc.lng;
+  			$log.info($scope.listing);
+
+            //get listings from firebase
+            var ref = new Firebase(DB_URL + "/listings");
+            var listings = $firebaseArray(ref);
+
+            //wait till get is done
+            listings.$loaded().then(function(){
+                $log.info(listings);
+                listings.$add({
+                    name: $scope.listing.name,
+                    desc: $scope.listing.desc,
+                    long: $scope.listing.long,
+                    lat: $scope.listing.lat
+                }).then(function(ref){
+                    $log.info("works");
+                    $location.path("/#/");
+                });
+            });
   		} 
 	});
+    //$log.info(point);
 	return point;
 };
   });

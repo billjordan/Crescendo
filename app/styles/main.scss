@@ -7,17 +7,34 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 
 body {
 padding: 0;
-background: #99ff99;
+background: url("../images/background.png");
+background-size: cover;
+background-attachment: fixed;
+	font-family: 'montserrat';
 }
+
+body, html{
+	height: 100%;
+	
+}
+
+
 
 .formBody{
 padding-top: 20px;
 padding-bottom: 20px;
 background: white;
 font-weight: bold;
+opacity: .8;
+margin-top: 30px;
 }
+
 .container-fluid{
-padding: 0
+padding: 0;
+}
+
+textarea{
+max-width: 100%;
 }
 
 
@@ -85,6 +102,8 @@ padding: 0
   .footer {
     padding-left: 0;
     padding-right: 0;
+	position: relative;
+	z-index: 20;
   }
   /* Space out the masthead */
   .header {
@@ -96,10 +115,21 @@ padding: 0
   }
 }
 
-#map {
-    height:420px;
-    width:600px;
+.map_container{
+    position: relative;
+    width: 100%;
+padding-bottom: 38%; /* Ratio 16:9 ( 100%/16*9 = 56.25% ) */
 }
+.map_container .map_canvas{
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+}
+
 .infoWindowContent {
     font-size:  14px !important;
     border-top: 1px solid #ccc;
@@ -109,4 +139,67 @@ h2 {
     margin-bottom:0;
     margin-top: 0;
 }
+#site_desc h1{
+	background-color: #3d58a7;
+	color: #fff;
+	text-align:center;
+	margin: 0;
+	padding: 10px 0;
+	font-size: 18px;
+	font-family: 'montserrat';
+	letter-spacing: .1em;
+}
+
+/*navbar*/
+
+.navbar-default, .footer{
+background-color: rgba(255, 255, 255, .867);}
+
+#navbar{
+height: 125px;
+}
+#js-navbar-collapse{float:right;
+margin-top: 78px;
+
+}
+.header,.navbar{
+	margin-bottom: 0;
+}
+.navbar-default .navbar-nav > li > a {
+    color: #3d58a7;
+	font-size: 1.5em;
+	font-family: 'montserrat';
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+    color: #333;
+}
+.navbar-default .navbar-nav > .active > a, 
+.navbar-default .navbar-nav > .active > a:hover, 
+.navbar-default .navbar-nav > .active > a:focus {
+    color: black;
+background-color: transparent;
+}
+.navbar-default .navbar-nav > .open > a, 
+.navbar-default .navbar-nav > .open > a:hover, 
+.navbar-default .navbar-nav > .open > a:focus {
+    color: #3d58a7;
+    background-color: transparent;
+}
+
+/*search-bar*/
+
+#map-search {
+	background-color: #3d58a7;
+	color: #fff;
+	position: absolute;
+	bottom: 0;
+	height: 30px;
+	width: 100%;
+}
+#map-search form{
+color: #000;
+text-align: center;
+}
+
 

@@ -3,14 +3,18 @@
 <div class="container">
 <p> Why should you add your business discount? It's great advertising! This advertising opportunity allows you to easily target thousands of college
 students in the Hamptom Roads area for free! </p>
-<form name="businessAdd">
+
+<div ng-controller="AboutCtrl">
+<form novalidate name="businessAdd">
   <fieldset>
     <legend>Add your business!</legend>
   <div class="col-md-6">Company Name:<br/>
-	<input type="text" name="compName"><br/><br/>
+	
+  <input ng-model = "listing.name" type="text" name="compName"><br/><br/>
+
 	
   Address:<br/>
-	<input type="text" name="address"><br/><br/>
+	<input type ="text" ng-model = "listing.address" name="address"><br/><br/>
 	
   Phone:<br/> 
 	<input type="tel" name="telephone"><br/><br/>
@@ -23,14 +27,15 @@ students in the Hamptom Roads area for free! </p>
     <input type="file" name="pic" accept="image/*"><br/><br/>
 	
   Company Description: <br />
-    <textarea rows="4" cols="50"></textarea><br /><br/>
+    <textarea rows="4" cols="50" ng-model = "listing.desc"></textarea><br /><br/>
 	
   Would you like us to call?
   <input type="checkbox" name="callback" value="yes"> Yes <input type="checkbox" name="callback" value="no" checked> No<br/><br/>
   
-      <input type="submit" value="Submit">
+      <input type="submit" value="Submit" ng-click="update(listing)">
 	  
   </fieldset>
  </form>
+</div>
  </div>
  </div>

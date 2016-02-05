@@ -17,7 +17,8 @@
   });*/
 
 //Data
-var listings = [
+/*
+var listingsLocal = [
     {
         name : 'Chartreuse Bistro',
         desc : '10% OFF NEXT MEAL',
@@ -49,48 +50,63 @@ var listings = [
         long : -76.2909619
     }
 ];
+*/
 
 //Angular App Module and Controller
 angular.module('crescendoApp')
-  .controller('MainCtrl', function ($scope) {
-
-    var mapOptions = {
-        zoom: 16,
-        center: new google.maps.LatLng(36.8496189, -76.2909619),
-        mapTypeId: google.maps.MapTypeId.TERRAIN
-    }
-
-    $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
-
-    $scope.markers = [];
+  .controller('MainCtrl', function ($scope, $log, DB_URL, $firebaseArray) {
     
-    var infoWindow = new google.maps.InfoWindow();
-    
-    var createMarker = function (info){
-        
-        var marker = new google.maps.Marker({
-            map: $scope.map,
-            position: new google.maps.LatLng(info.lat, info.long),
-            title: info.name
-        });
-        marker.content = '<div class="infoWindowContent">' + info.desc + '</div>';
-        
-        google.maps.event.addListener(marker, 'click', function(){
-            infoWindow.setContent('<h2>' + marker.title + '</h2>' + marker.content);
-            infoWindow.open($scope.map, marker);
-        });
-        
-        $scope.markers.push(marker);
-        
-    }  
-    
-    for (var i = 0; i < listings.length; i++){
-        createMarker(listings[i]);
-    }
+    //get listings from firebase
+    var listings = $firebaseArray(new Firebase(DB_URL + "/listings"));
 
-    $scope.openInfoWindow = function(e, selectedMarker){
-        e.preventDefault();
-        google.maps.event.trigger(selectedMarker, 'click');
+    //wait till get is done
+    listings.$loaded().then(function(){
+        $log.info(listings);
+        populateMap();
+    });
+
+    //populate the map after listings retrieved from db
+    function populateMap(){
+    
+        var mapOptions = {
+            zoom: 16,
+            center: new google.maps.LatLng(36.8496189, -76.2909619),
+            mapTypeId: google.maps.MapTypeId.TERRAIN
+        };
+
+        $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+        $scope.markers = [];
+        
+        var infoWindow = new google.maps.InfoWindow();
+        
+        var createMarker = function (info){
+            
+            var marker = new google.maps.Marker({
+                map: $scope.map,
+                position: new google.maps.LatLng(info.lat, info.long),
+                title: info.name
+            });
+            marker.content = '<div class="infoWindowContent">' + info.desc + '</div>';
+            
+            google.maps.event.addListener(marker, 'click', function(){
+                infoWindow.setContent('<h2>' + marker.title + '</h2>' + marker.content);
+                infoWindow.open($scope.map, marker);
+            });
+            
+            $scope.markers.push(marker);
+            
+        };  
+        
+        for (var i = 0; i < listings.length; i++){
+            createMarker(listings[i]);
+        }
+
+        $scope.openInfoWindow = function(e, selectedMarker){
+            e.preventDefault();
+            google.maps.event.trigger(selectedMarker, 'click');
+        };
+
     }
 
 });

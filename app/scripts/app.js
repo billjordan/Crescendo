@@ -15,8 +15,10 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'firebase'
   ])
+  .constant("DB_URL", "https://crescendoecpi.firebaseio.com")
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
